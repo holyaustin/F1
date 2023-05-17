@@ -1,0 +1,32 @@
+name: Publish to Blockless
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [publish-to-blockless]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish-on-blockless:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: write  # This is required for actions/checkout
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: get epository name
+        run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+      - run: |
+          sed -i 's/template_name/${{ env.REPOSITORY_NAME }}/g' bls.toml
+          cat bls.toml
+      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Blockless Action Setup
+        uses: txlabs/github-action-blockless-setup@v0.0.5
+      - name: Blockless Function Publish
+        uses: txlabs/github-action-blockless-deploy@v0.0.3

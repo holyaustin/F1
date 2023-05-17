@@ -1,0 +1,16 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "APACHE-2.0",
+  "scripts": {
+    "clean": "rm -rf build",
+    "build:release": "npm run clean; asc index.ts --target release",
+    "build:debug": "npm run clean; asc index.ts --target debug"
+  },
+  "dependencies": {
+    "@blockless/sdk": "^1.1.0",
+    "as-wasi": "^0.6.0",
+    "assemblyscript": "^0.25.0"
+  }
+}

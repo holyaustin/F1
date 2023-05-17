@@ -1,0 +1,16 @@
+name = "F1"
+version = "1.0.0"
+
+[deployment]
+permission = "public"
+nodes = 1
+
+[build]
+dir = "build"
+entry = "F1_debug.wasm"
+command = "npm run build:debug"
+
+[build_release]
+dir = "build"
+entry = "F1.wasm"
+command = "npm run build:release"
